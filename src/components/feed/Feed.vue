@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import Button from 'primevue/button';
 import Textarea from 'primevue/textarea';
+import { RouterLink } from 'vue-router'
 import {usePostStore} from '../../stores/counter'
 
 const newPostText = ref('');
@@ -31,7 +32,9 @@ const editPost = (id: number, text: string) => {
     </div>
     <div class="content">
         <div v-for="item in postStore.allPosts">
-            <p>{{ item.text }}</p>
+            <RouterLink :to="`/post/${item.id}`" >
+                 <p>{{ item.text }}</p>
+            </RouterLink>
             <br>
             <Button label="Like" v-if="!item.liked" @click="postStore.toggleLike(item.id)" />
             <Button label="Unlike" v-if="item.liked" @click="postStore.toggleLike(item.id)" />
@@ -48,5 +51,9 @@ div.content > div {
 }
 div.content > div > * {
     margin: 8px 12px;
+}
+a p {
+    color: #000;
+    margin: 0 8px;
 }
 </style>
